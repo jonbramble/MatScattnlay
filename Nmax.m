@@ -16,6 +16,9 @@ function result = Nmax(L,x,m)
     for a = 2:L   
         mlxl_m1(a) = round(abs(m(a)*x(a-1)));
     end
+    %alternative would be to remove first and last values and then do
+    %vector product - indexing model is unknown to me
+    
     values = [mlxl,mlxl_m1,nstop];
     result = max(values);
     result = result + 15; 
