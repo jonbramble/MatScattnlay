@@ -2,8 +2,8 @@
 
 function [D3n] = D3_nz(D1n,z)
 nmax=length(D1n);
-D3n = zeros(1,length(nmax));
-phizeta = zeros(1,length(nmax));
+D3n = zeros(1,nmax);
+phizeta = zeros(1,nmax);
 D3_0 = 1i;
 D1_0 = 1/D1n(1);
 a=real(z);

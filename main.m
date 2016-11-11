@@ -33,5 +33,5 @@ for l=2:layers
     G2 = m(l)*H_an(:,(l-1))-m(l-1)*D3z1';
     Gt1 = m(l-1)*H_bn(:,(l-1))-m(l)*D1z1';
     Gt2 = m(l-1)*H_bn(:,(l-1))-m(l)*D3z1';
-    Q_nl(nm,x(l),z1(l),z2(l),D1z2,D3z2,D1z1,D3z1);
+    Q_nl(nm,x,l,z1(l),z2(l),D1z2,D3z2,D1z1,D3z1);
 end
