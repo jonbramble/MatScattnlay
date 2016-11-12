@@ -11,10 +11,13 @@ function result = Nmax(L,x,m)
     assert(length(m)==L, 'Size of m must equal the number of layers L')
     
     nstop = Nstop(x(L));        % find nstop for the largest layer
-    mlxl_m1 = zeros(1,(L-1));   % preallocate the array
     mlxl = round(abs(x.*m));
-    for a = 2:L   
-        mlxl_m1(a) = round(abs(m(a)*x(a-1)));
+    mlxl_m1 = 0;
+    if L>1
+        mlxl_m1 = zeros(1,(L-1));   % preallocate the array
+        for l = 2:L   
+            mlxl_m1(l) = round(abs(m(l)*x(l-1)));
+        end
     end
     %alternative would be to remove first and last values and then do
     %vector product - indexing model is unknown to me
