@@ -3,7 +3,7 @@ ag = ag_n + 1i*ag_k;
 
 Nm = 1.33;  %Ambient index
 
-r1 = 20;    %inner radius
+r1 = 35;    %inner radius
 r2 = 21;
 
 r = [r1];   %array of particle and shell radii
@@ -19,3 +19,5 @@ for lm=1:length(lambda)          %loop over lambda
 end
 
 plot(lambda,Qext,'r')
+hold on
+plot(lambda,Qsca,'k')
