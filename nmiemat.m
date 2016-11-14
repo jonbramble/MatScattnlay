@@ -1,4 +1,4 @@
-function [Qext,Qsca] = nmie(m,x)
+function [Qext,Qsca] = nmiemat(L,x,m)
 layers = length(m);
 assert(length(x)==layers, 'Size of x must equal the number of layers')
 nm = Nmax(layers,x,m);
