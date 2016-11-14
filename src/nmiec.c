@@ -100,16 +100,16 @@ complex calc_S2_n(int n, complex an, complex bn, double Pin, double Taun) {
 //**********************************************************************************//
 
 int nMie(int L, double x[], complex m[], int nTheta, double Theta[], double *Qext, double *Qsca, double *Qabs, double *Qbk, double *Qpr, double *g, double *Albedo, complex S1[], complex S2[]) {
-  int n_max = Nmax(L, x, m);
   
-//   printf("m %f,i%f\n",m[1].r,m[1].i);
-//   printf("m %f,i%f\n",m[2].r,m[2].i);
-//   
-//   printf("x %f\n",x[1]);
-//   printf("x %f\n",x[2]);
-//   printf("L %d\n",L);
-//   printf("nt %d\n",nTheta);
-
+  
+  mexPrintf("m %f,i%f\n",m[1].r,m[1].i);
+  mexPrintf("m %f,i%f\n",m[2].r,m[2].i);
+  
+  mexPrintf("x %e\n",x[0]);
+  mexPrintf("x %e\n",x[2]);
+  mexPrintf("L %d\n",L);
+  //mexPrintf("nt %d\n",nTheta);
+int n_max = Nmax(L, x, m);
   complex an, bn, anP1, bnP1, Qbktmp;
 
   complex D1_lmlx[n_max + 2][L + 1], D1_lmlxM1[n_max + 2][L + 1];
@@ -150,9 +150,9 @@ int nMie(int L, double x[], complex m[], int nTheta, double Theta[], double *Qex
   // Calculate D1, D3 and PsiZeta for z1 in the first layer //
   //********************************************************//
   z1 = RCmul(x[1], m[1]);
-
+  
   // Downward recurrence for D1 - equations (16a) and (16b)
-  D1_lmlx[n_max + 1][1] = Complex(0, 0);                    // indicies - hack to avoid 0 in array but n is in equation!
+  D1_lmlx[n_max + 1][1] = Complex(0, 0);                 
   for (n = n_max + 1; n > 0; n--) {
     D1_lmlx[n - 1][1] = Csub(Cdiv(Complex(n, 0), z1), Cdiv(Complex(1, 0), Cadd(D1_lmlx[n][1], Cdiv(Complex(n, 0), z1))));
   }
@@ -255,7 +255,8 @@ int nMie(int L, double x[], complex m[], int nTheta, double Theta[], double *Qex
   //Calculate D1, D3 and PsiZeta for XL //
   //************************************//
   z1 = Complex(x[L], 0);
-
+  //mexPrintComplex(z1);
+  
   // Downward recurrence for D1XL - equations (16a) and (16b)
   D1XL[n_max + 1] = Complex(0, 0);
   for (n = n_max + 1; n > 0; n--) {
@@ -281,15 +282,25 @@ int nMie(int L, double x[], complex m[], int nTheta, double Theta[], double *Qex
   // scattering parameters                                               //
   //*********************************************************************//
   x2 = x[L]*x[L];
+  
+  //mexPrintf("%e\n",x[1]);
 
   anP1 = calc_an(1, x[L], Ha[1][L], m[L], PsiXL[1], ZetaXL[1], PsiXL[0], ZetaXL[0]);
   bnP1 = calc_bn(1, x[L], Hb[1][L], m[L], PsiXL[1], ZetaXL[1], PsiXL[0], ZetaXL[0]);
+  
+  //mxPrintComplex(anP1);
+  //mxPrintComplex(bnP1);
   for (n = 1; n <= n_max; n++) {
     an = anP1;
     bn = bnP1;
 
     anP1 = calc_an(n + 1, x[L], Ha[n + 1][L], m[L], PsiXL[n + 1], ZetaXL[n + 1], PsiXL[n], ZetaXL[n]);
     bnP1 = calc_bn(n + 1, x[L], Hb[n + 1][L], m[L], PsiXL[n + 1], ZetaXL[n + 1], PsiXL[n], ZetaXL[n]);
+    
+//  mexPrintf("%d\n",n);
+//  mexPrintComplex(an);
+//  mexPrintComplex(bn);
+//  mexPrintf("%\n",n);
 
     // Equation (27)
     *Qext = *Qext + (double)(n + n + 1)*(an.r + bn.r);

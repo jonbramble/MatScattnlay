@@ -31,6 +31,16 @@ complex RCmul(double r, complex z) {
   return zr;
 }
 
+// my implementation
+complex CdivJ(complex z1, complex z2){
+    double denom;
+    complex zr;
+    denom = z2.r*z2.r + z2.i*z2.i;
+    zr.r = (z1.r*z2.r + z1.i*z2.i)/denom;
+    zr.i = (z1.i*z2.r - z1.r*z2.i)/denom;
+    return zr;    
+}
+
 complex Cdiv(complex z1, complex z2) {
 /* The following algorithm is used to properly handle
    denominator overflow:

@@ -6,6 +6,7 @@ complex Csub(complex z1, complex z2);  /* substraction */
 complex Cmul(complex z1, complex z2);  /* multiplication */
 complex RCmul(double r, complex z);    /* double*complex */
 complex Cdiv(complex z1, complex z2);  /* division */
+complex CdivJ(complex z1, complex z2);  /* division */
 complex Complex(double r, double i);   /* convert to double */
 
 complex Conjg (complex z);    /* conjuge */

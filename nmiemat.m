@@ -21,15 +21,15 @@ if layers > 1
   
     for l=2:layers
         z1(l) = m(l-1)*x(l);
-        D1z2=D1_nz(nm,z2(l))';
-        D1z1=D1_nz(nm,z1(l))';
-        D3z2=D3_nz(D1z2,z2(l))';
-        D3z1=D3_nz(D1z1,z1(l))';
+        D1z2=D1_nz(nm,z2(l)).';
+        D1z1=D1_nz(nm,z1(l)).';
+        D3z2=D3_nz(D1z2,z2(l)).';
+        D3z1=D3_nz(D1z1,z1(l)).';
         G1 = m(l)*H_an(:,(l-1))-m(l-1)*D1z1;
         G2 = m(l)*H_an(:,(l-1))-m(l-1)*D3z1;
         Gt1 = m(l-1)*H_bn(:,(l-1))-m(l)*D1z1;
         Gt2 = m(l-1)*H_bn(:,(l-1))-m(l)*D3z1;
-        Qn = Q_nl(nm,x,l,z1(l),z2(l),D1z2,D3z2,D1z1,D3z1)';
+        Qn = Q_nl(nm,x,l,z1(l),z2(l),D1z2,D3z2,D1z1,D3z1).';
         H_an(:,l) = (G2.*D1z2 - Qn.*G1.*D3z2)./(G2-Qn.*G1);
         H_bn(:,l) = (Gt2.*D1z2 - Qn.*Gt1.*D3z2)./(Gt2-Qn.*Gt1);
     end
@@ -55,10 +55,13 @@ mL = m(layers);
 an(n) =  ((H_an(n,layers)/mL+n/xL)*phixL(n)-phi0)/((H_an(n,layers)/mL+n/xL)*zetaxL(n)-zeta0);
 bn(n) =  ((mL*H_bn(n,layers)+n/xL)*phixL(n)-phi0)/((mL*H_bn(n,layers)+n/xL)*zetaxL(n)-zeta0);
 
+%vectorise this
 for n=2:nm
     an(n) =  ((H_an(n,layers)/mL+n/xL)*phixL(n)-phixL(n-1))/((H_an(n,layers)/mL+n/xL)*zetaxL(n)-zetaxL(n-1));
     bn(n) =  ((mL*H_bn(n,layers)+n/xL)*phixL(n)-phixL(n-1))/((mL*H_bn(n,layers)+n/xL)*zetaxL(n)-zetaxL(n-1));
 end
+an
+bn
 
 Qext = 2/(xL^2)*(sum((2*1:nm+1).*(real(an)+real(bn))));   %vector notation here
 Qsca = 2/(xL^2)*(sum((2*1:nm+1).*(abs(an).^2+abs(bn).^2)));   %vector notation here
