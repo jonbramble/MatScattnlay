@@ -3,8 +3,6 @@
 #include "ucomplex.h"
 #include "nmiec.h"
 
-void mexPrintComplex(complex z);
-
 #define MAXLAYERS 110
 #define MAXTHETA 80
 
@@ -30,7 +28,6 @@ void mexPrintComplex(complex z){
             mexPrintf("%fi\n", z.i);
          }
 }
-
 
 void mexFunction( int nlhs, mxArray *plhs[], 
 		  int nrhs, const mxArray*prhs[] )      
@@ -61,10 +58,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     lptr = mxGetPr(L_IN); 
     xptr = mxGetPr(X_IN);
-    
+  
     L = lptr[0];
     
-    mexPrintf("%e \n",xptr[0]);
+    //mexPrintf("%e \n",xptr[0]);
     
     //loop over L - scattnlay code is indexed from 1;
     for(i=0;i<L;i++){
@@ -72,7 +69,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         m[i+1].i = mi[i];
         x[i+1] = xptr[i];
     }
-    mexPrintf("%e \n",x[1]);
+    
+    mexPrintf("x1 %e \n",x[1]);
+    testx(x);
+    
+    mexPrintComplex(m[1]);
+    testz(m);
     
     QSCA_OUT = mxCreateDoubleMatrix(sm, sn, mxREAL);
     QEXT_OUT = mxCreateDoubleMatrix(sm, sn, mxREAL);
@@ -83,3 +85,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     nmax = nMie(L, x, m, nTheta, Theta, Qext, Qsca, &Qabs, &Qbk, &Qpr, &g, &albedo, S1, S2);
     return;
 }
+
+
+
+

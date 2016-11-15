@@ -100,16 +100,12 @@ complex calc_S2_n(int n, complex an, complex bn, double Pin, double Taun) {
 //**********************************************************************************//
 
 int nMie(int L, double x[], complex m[], int nTheta, double Theta[], double *Qext, double *Qsca, double *Qabs, double *Qbk, double *Qpr, double *g, double *Albedo, complex S1[], complex S2[]) {
-  
-  
-  mexPrintf("m %f,i%f\n",m[1].r,m[1].i);
-  mexPrintf("m %f,i%f\n",m[2].r,m[2].i);
-  
-  mexPrintf("x %e\n",x[0]);
-  mexPrintf("x %e\n",x[2]);
+
+  mexPrintComplex(m[1]);
+  mexPrintf("x %e\n",x[1]);
   mexPrintf("L %d\n",L);
   //mexPrintf("nt %d\n",nTheta);
-int n_max = Nmax(L, x, m);
+  int n_max = Nmax(L, x, m);
   complex an, bn, anP1, bnP1, Qbktmp;
 
   complex D1_lmlx[n_max + 2][L + 1], D1_lmlxM1[n_max + 2][L + 1];
@@ -336,4 +332,12 @@ int n_max = Nmax(L, x, m);
   *Qbk = (Qbktmp.r*Qbktmp.r + Qbktmp.i*Qbktmp.i)/x2;    // Equation (33)
   
   return n_max;
+}
+
+void testx(const double *x){
+    mexPrintf("x %e\n",x[1]);
+}
+
+void testz(complex z[]){
+    mexPrintComplex(z[1]);
 }
